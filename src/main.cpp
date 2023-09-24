@@ -1,12 +1,8 @@
 
-#include <iostream>
-#include <string>
+#include <print>
 
 int main(int, char**)
 {
-	std::string str("Minimal CRT example\n");
-
-	std::cout << str;
-
+	std::println("Hello world");
 	return 0;
 }

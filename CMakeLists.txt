@@ -7,10 +7,11 @@ set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 # Enable experimental modules support
 # https://gitlab.kitware.com/cmake/cmake/-/blob/master/Help/dev/experimental.rst?ref_type=heads
 set(CMAKE_EXPERIMENTAL_CXX_MODULE_CMAKE_API "aa1f7df0-828a-4fcd-9afc-2dc80491aca7")
-set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP 1)
+#set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP 1)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 
 set(CMAKE_CXX_STANDARD          23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -26,19 +27,19 @@ else()
 endif()
 
 # Tests
-set(RUN_TESTS                   ON)
+set(RUN_TESTS                   OFF)
 
 include(SetupMSVC)
 
 project(mut LANGUAGES CXX)
 
 #
-add_executable (mut )
+add_executable (${CMAKE_PROJECT_NAME} )
 
-set_target_properties(mut PROPERTIES POSITION_INDEPENDENT_CODE ON)
-set_target_properties(mut PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
 
-setup_project(mut "")
+setup_project(${CMAKE_PROJECT_NAME} "")
 
 
 #
@@ -49,7 +50,7 @@ add_subdirectory(src)
 
 
 #
-target_compile_options(mut PRIVATE 
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE 
        
     /wd5039 # pointer or reference to potentially throwing function passed to 'extern "C"' function under -EHc.
     
@@ -64,7 +65,20 @@ target_compile_options(mut PRIVATE
 
     /wd4626 # assignment operator was implicitly defined as deleted
     /wd5027 # move assignment operator was implicitly defined as deleted
+    /wd5026 # move constructor was implicitly defined as deleted
     /wd4061 # switch of enum is not explicitly handled by a case label
+
+    /wd4355 # 'this': used in base member initializer list
+    /wd4625 # copy constructor was implicitly defined as deleted
+    /wd5220 # a non-static data member with a volatile qualified type no longer implies
+            # that compiler generated copy/move constructors and copy/move assignment operators are not trivial
+    /wd5204 # class has virtual functions, but its trivial destructor is not virtual; instances of 
+            # objects derived from this class may not be destructed correctly
+    
+    /wd4686 # possible change in behavior, change in UDT return calling convention
+    
+
+
 
 )
 

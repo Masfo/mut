@@ -1,22 +1,26 @@
 
 #
-target_sources(mut PRIVATE
+target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 	main.cpp
 )
 
 add_subdirectory(ModuleTest)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ModuleTest)
 
-target_link_libraries(mut PRIVATE ModuleTest)
 
-target_include_directories(mut PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+# Hack STD module in
+file(COPY $ENV{VCToolsInstallDir}/modules/std.ixx
+  DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/
+)
 
 
 # Modules here
-target_sources(mut 
-    PRIVATE 
-	FILE_SET cxx_modules TYPE CXX_MODULES FILES
-    
+target_sources(${CMAKE_PROJECT_NAME} PUBLIC 
+
+	FILE_SET modules TYPE CXX_MODULES FILES
+	std.ixx
 )
+
 
 
 

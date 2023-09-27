@@ -1,0 +1,3 @@
+[submodule "PikuModules"]
+	path = PikuModules
+	url = https://github.com/Masfo/PikuModules.git

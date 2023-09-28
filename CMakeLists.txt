@@ -7,7 +7,7 @@ set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 # Enable experimental modules support
 # https://gitlab.kitware.com/cmake/cmake/-/blob/master/Help/dev/experimental.rst?ref_type=heads
 set(CMAKE_EXPERIMENTAL_CXX_MODULE_CMAKE_API "aa1f7df0-828a-4fcd-9afc-2dc80491aca7")
-#set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP 1)
+#set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -30,16 +30,19 @@ endif()
 set(RUN_TESTS                   OFF)
 
 include(SetupMSVC)
+include(std_modules)
+
 
 project(mut LANGUAGES CXX)
 
 #
 add_executable (${CMAKE_PROJECT_NAME} )
+setup_project(${CMAKE_PROJECT_NAME} "")
+add_std_module(${CMAKE_PROJECT_NAME})
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
 
-setup_project(${CMAKE_PROJECT_NAME} "")
 
 
 #

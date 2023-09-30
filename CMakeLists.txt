@@ -79,6 +79,9 @@ target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE
             # objects derived from this class may not be destructed correctly
     
     /wd4686 # possible change in behavior, change in UDT return calling convention
+
+    /wd4324 # structure was padded due to alignment specifier
+
     
 
 

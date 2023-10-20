@@ -105,7 +105,7 @@ function(setup_project target outputname)
         target_compile_options(${target} PRIVATE /std:c++latest)
         target_compile_options(${target} PRIVATE /Zc:__cplusplus)
 
-        target_compile_options(${target} PRIVATE /Wall)
+        target_compile_options(${target} PRIVATE /W4)
         # target_compile_options(${target} PRIVATE /WX) # Warnings as errors
 
         

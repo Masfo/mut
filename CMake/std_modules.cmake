@@ -12,7 +12,7 @@ if(MSVC)
 	
 	
 	target_sources(${TARGET} 
-		PRIVATE 
+		PUBLIC 
 		FILE_SET std_module 
 		TYPE CXX_MODULES 
 		FILES 

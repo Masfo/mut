@@ -9,6 +9,9 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
+
+
+
 set(CMAKE_CXX_STANDARD          23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS        OFF)
@@ -22,6 +25,18 @@ if(DEFINED ENV{VCPKG_ROOT})
 else()
     message(WARNING "VCPKG_ROOT is not set")
 endif()
+
+# 3rd party
+include(FetchContent)
+
+FetchContent_Declare(
+  Deckard
+  GIT_REPOSITORY https://github.com/Masfo/Deckard.git
+  GIT_TAG main
+  GIT_SHALLOW 1
+  #GIT_TAG v.0.0.262
+)
+FetchContent_MakeAvailable(Deckard)
 
 # Tests
 set(RUN_TESTS                   OFF)
@@ -46,6 +61,8 @@ set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZAT
 #
 add_subdirectory(src)
 # enable_testing()
+
+
 
 
 
@@ -83,3 +100,4 @@ target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE
 )
 
  
+

@@ -216,13 +216,12 @@ function(setup_project target outputname)
 
     find_program(BUILDINC_TOOL "buildinc" NO_CACHE)
     if(BUILDINC_TOOL)
-    add_custom_command(TARGET ${target}
-                       PRE_BUILD
-                       COMMAND ${BUILDINC_TOOL} ${CMAKE_CURRENT_SOURCE_DIR}/src/buildnumber.ixx ${target} -q -m 
-                       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
-                       COMMENT "Increase build number"
-
-    )
+        add_custom_command(TARGET ${target}
+                           PRE_BUILD
+                           COMMAND ${BUILDINC_TOOL} ${CMAKE_CURRENT_SOURCE_DIR}/src/buildnumber.ixx ${target} -q -m 
+                           WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
+                           COMMENT "Increase build number"
+        )
     endif()
 
 endfunction()

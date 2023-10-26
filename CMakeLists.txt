@@ -27,14 +27,13 @@ endif()
 set(RUN_TESTS                   OFF)
 
 include(SetupMSVC)
-include(std_modules)
+#include(std_modules)
 
 
 project(mut LANGUAGES CXX)
 
 #
 add_executable(${CMAKE_PROJECT_NAME})
-#add_std_module(${CMAKE_PROJECT_NAME})
 
 
 setup_project(${CMAKE_PROJECT_NAME} "")

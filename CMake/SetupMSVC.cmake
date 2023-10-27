@@ -99,7 +99,7 @@ function(setup_project target outputname)
         target_compile_options(${target} PRIVATE /diagnostics:caret)
 
 
-        target_compile_options(${target} PRIVATE /experimental:module)
+        #target_compile_options(${target} PRIVATE /experimental:module)
         target_compile_options(${target} PRIVATE /Zc:preprocessor)
         target_compile_options(${target} PRIVATE /permissive-)
         target_compile_options(${target} PRIVATE /std:c++latest)
@@ -214,7 +214,7 @@ function(setup_project target outputname)
 
     endif() # MSVC
 
-    find_program(BUILDINC_TOOL "buildinc" NO_CACHE)
+    find_program(BUILDINC_TOOL "buildinc")
     if(BUILDINC_TOOL)
         add_custom_command(TARGET ${target}
                            PRE_BUILD

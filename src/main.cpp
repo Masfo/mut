@@ -3,6 +3,7 @@
 
 import std;
 import Deckard;
+import DeckardBuild;
 
 using namespace deckard;
 
@@ -17,6 +18,11 @@ std::string input(std::string_view ask)
 int main(int, char **)
 {
 	using namespace std::string_literals;
+
+#ifndef _DEBUG
+	std::println("mut {} ({})", mut::version_string, mut::build_time_string);
+	std::println("\t * deckard {}", DeckardBuild::calver);
+#endif
 
 
 	// mut - simple version first, just run command on filechange (just one file, no wildcard)
@@ -43,18 +49,6 @@ int main(int, char **)
 	// [mut.exe:1]		; another cmd window run 'mut -m1', runs only marked 1, default is 0 for all
 	// ls ${root}
 
-	while (true)
-	{
-		auto name = input("Name: ");
-
-		if (name.empty())
-			continue;
-
-		if (name == "quit")
-			break;
-
-		std::println("Hello {}", name);
-	}
 
 	// ${file} - filename w/ extension
 	// ${base} - filename w/o extension
@@ -66,7 +60,7 @@ int main(int, char **)
 	// trace("{}", GetLastError());
 
 
-	trace("this is debug");
+	trace("this is debug 1  3 2");
 
 
 	auto print_ptr = [](std::string_view name, void *ptr) { dbgln("{0:>16}: {1:#064b} {1:>#018x}", name, std::bit_cast<u64>(ptr)); };

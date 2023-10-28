@@ -36,9 +36,12 @@ FetchContent_Declare(
   GIT_SHALLOW 1
   #GIT_TAG v.0.0.262
 )
-
-
 FetchContent_MakeAvailable(Deckard)
+
+
+
+
+
 
 # Tests
 set(RUN_TESTS                   OFF)
@@ -48,6 +51,7 @@ include(SetupMSVC)
 
 
 project(mut LANGUAGES CXX)
+
 
 #
 add_executable(${CMAKE_PROJECT_NAME})

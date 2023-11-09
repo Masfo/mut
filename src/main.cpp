@@ -3,7 +3,9 @@
 
 import std;
 import Deckard;
+#ifndef _DEBUG
 import mut;
+#endif
 
 using namespace deckard;
 
@@ -60,7 +62,7 @@ int main(int, char **)
 	// trace("{}", GetLastError());
 
 
-	trace("this is debug 1  3 2");
+	trace("this is debug 1  3 2 2");
 
 
 	auto print_ptr = [](std::string_view name, void *ptr) { dbgln("{0:>16}: {1:#064b} {1:>#018x}", name, std::bit_cast<u64>(ptr)); };

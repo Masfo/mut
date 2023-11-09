@@ -33,7 +33,8 @@ FetchContent_Declare(
   Deckard
   GIT_REPOSITORY https://github.com/Masfo/Deckard.git
   GIT_TAG main
-  GIT_SHALLOW 1
+  GIT_SHALLOW TRUE
+  GIT_PROGRESS   TRUE
   #GIT_TAG v.0.0.262
 )
 FetchContent_MakeAvailable(Deckard)
@@ -106,4 +107,3 @@ target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE
 )
 
  
-

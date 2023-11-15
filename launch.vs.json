@@ -7,7 +7,7 @@
             "project": "CMakeLists.txt",
             "currentDir": "${workspaceRoot}\\bin",
             "name": "Debug w/ argument(s)",
-            "args": [ "debug" ]
+            "args": [ "-f mut.exe -c \"cls && mut\"" ]
         },
         {
             "type": "debug",

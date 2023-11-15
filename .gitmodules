@@ -1,5 +1,0 @@
-
-[submodule "src/Deckard"]
-	path = src/Deckard
-	url = https://github.com/Masfo/Deckard.git
-	branch = main

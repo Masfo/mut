@@ -17,7 +17,7 @@ std::string input(std::string_view ask)
 	return ret;
 }
 
-int main(int, char **)
+int main(int argc, char **argv)
 {
 	using namespace std::string_literals;
 
@@ -25,6 +25,8 @@ int main(int, char **)
 	std::println("mut {} ({})", mut::version_string, mut::build_time_string);
 	std::println("\t * deckard {}", DeckardBuild::calver);
 #endif
+
+	std::vector<std::string> params(argv + 1, argv + argc);
 
 
 	// mut - simple version first, just run command on filechange (just one file, no wildcard)
@@ -64,17 +66,6 @@ int main(int, char **)
 
 	trace("this is debug 1  3 2 2");
 
-
-	auto print_ptr = [](std::string_view name, void *ptr) { dbgln("{0:>16}: {1:#064b} {1:>#018x}", name, std::bit_cast<u64>(ptr)); };
-
-	print_ptr("MessageBoxA", &MessageBoxA);
-	print_ptr("main", &main);
-	print_ptr("print_ptr", &print_ptr);
-
-	// 0x07ff793890000
-	// 0x07ffb1cfc9740
-	// 0x07ff731cf0000
-	// 0x1FFFFFFFFFFFF
 
 	return 0;
 }

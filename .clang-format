@@ -22,7 +22,7 @@ AlignTrailingComments:
 Cpp11BracedListStyle: true
 DerivePointerAlignment: true
 IndentPPDirectives: None
-MaxEmptyLinesToKeep: 2
+MaxEmptyLinesToKeep: 1
 SpaceBeforeCpp11BracedList: false
 NamespaceIndentation: All
 SortIncludes: CaseSensitive
@@ -32,6 +32,9 @@ SpaceAfterTemplateKeyword: false
 AlwaysBreakTemplateDeclarations: Yes
 RequiresClausePosition: OwnLine
 IndentRequiresClause: false
+
+AllowShortCaseLabelsOnASingleLine: true
+IndentCaseLabels: true
 
 IntegerLiteralSeparator:
     Binary: 4

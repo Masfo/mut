@@ -33,9 +33,9 @@ FetchContent_Declare(
   Deckard
   GIT_REPOSITORY https://github.com/Masfo/Deckard.git
   GIT_TAG main
-  GIT_SHALLOW TRUE
+  GIT_SHALLOW 1
   GIT_PROGRESS   TRUE
-  #GIT_TAG v.0.0.262
+  #GIT_TAG v0.0.262
 )
 FetchContent_MakeAvailable(Deckard)
 

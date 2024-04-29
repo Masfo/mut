@@ -9,16 +9,16 @@ export namespace mut
 	constexpr uint32_t minor = 0;
 
 	 // Do not modify these
-	constexpr uint32_t build = 353;
+	constexpr uint32_t build = 466;
 	
 	constexpr uint32_t version = major * 10000 + minor * 1000 + build;
-	constexpr uint64_t random_seed = 0x3a396812eab387f8;
+	constexpr uint64_t random_seed = 0xfd598e7f06bd1bf6;
 	
-	constexpr char version_string[] = "v0.0.353";
-	constexpr char build_time_string[] = "2023-11-15 12:17:32";
-	constexpr char phrase[] = "zipping-splashing-blah";
-	constexpr char calver[] = "2023.46.353";
-	constexpr char uuid[] = "EB78E45E-662E-4B64-9F7F-8E45175A2BBC";
+	constexpr char version_string[] = "v0.0.466";
+	constexpr char build_time_string[] = "2024-04-29 20:18:00";
+	constexpr char phrase[] = "triage-pupil-ceramics";
+	constexpr char calver[] = "2024.18.466";
+	constexpr char uuid[] = "1DD847E0-285B-43B4-9379-0C98998797C4";
 
 	// Copy paste to import to your project
 	/*

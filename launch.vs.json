@@ -15,6 +15,13 @@
             "currentDir": "${workspaceRoot}\\bin",
             "name": "Debug w/o arguments",
             "args": []
+        },
+        {
+            "type": "debug",
+            "project": "CMakeLists.txt",
+            "currentDir": "${workspaceRoot}\\bin",
+            "name": "mut sample",
+            "args": [ "sample" ]
         }
     ]
 }

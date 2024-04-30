@@ -1,5 +1,6 @@
 
 #include <windows.h>
+#include <shellapi.h>
 
 import std;
 import Deckard;
@@ -31,23 +32,69 @@ CommandResult run_command(const std::string &command, fs::path folder = fs::curr
 
 	PROCESS_INFORMATION pi{};
 	STARTUPINFOA        si = {sizeof(STARTUPINFO)};
+	si.dwFlags             = STARTF_USESTDHANDLES;
 	si.hStdOutput          = GetStdHandle(STD_OUTPUT_HANDLE);
 	si.hStdInput           = GetStdHandle(STD_INPUT_HANDLE);
 	si.hStdError           = GetStdHandle(STD_ERROR_HANDLE);
 
+	// std::string args = "cmd /c " + command;
 	std::string args = "cmd /c " + command;
+	args             = "";
+
+	if (command.empty())
+	{
+		std::println(std::cerr, "no executable set");
+		return {};
+	}
+
+	std::println("");
 
 	auto start = std::chrono::system_clock::now();
-	if (auto result = CreateProcessA(nullptr, (LPSTR)args.c_str(), nullptr, nullptr, FALSE, 0, nullptr, folder.string().c_str(), &si, &pi);
-		!result)
+
+	// ExpandEnvironmentStringsA
+	// When you use cmd.exe, it performs the expansion for you. CreateProcess
+	// does not so you will need to do it before calling CreateProcess.
+	// Alternatively you could use ShellExecute which will expand environment strings.
+
+	// void *pEnv = nullptr;
+	// char  cmd[4096];
+
+	// strcpy(cmd,command);
+	// ExpandEnvironmentStringsA(command.data(), cmd, sizeof(cmd) - 1);
+
+	if (auto result = CreateProcessA(
+			nullptr, (LPSTR)command.c_str(), nullptr, nullptr, TRUE, CREATE_UNICODE_ENVIRONMENT, 0, folder.string().c_str(), &si, &pi);
+		result == 0)
 	{
+		command_result.exit_code = GetLastError();
+		std::println(std::cerr, "Could not run '{}' - {}", command, *command_result.exit_code);
+
+		CloseHandle(pi.hProcess);
+		CloseHandle(pi.hThread);
+
 		return command_result;
 	}
 
 	// TODO: Add timeout parameter
-	WaitForSingleObject(pi.hProcess, INFINITE);
+	u32 timeout = 1000;
+	if (auto wait = WaitForSingleObject(pi.hProcess, timeout); wait != 0)
+	{
+		std::println("");
+		if (wait == WAIT_TIMEOUT)
+		{
+			std::println("Timeout: {:x}", GetLastError());
+		}
+		else
+		{
+			std::println("Failed: {:x}", GetLastError());
+		}
+
+		command_result.exit_code = GetLastError();
+		return command_result;
+	}
 
 	auto end = std::chrono::system_clock::now();
+	std::println("");
 
 	//
 	DWORD exit_code = 0;
@@ -111,14 +158,14 @@ int main(int argc, char **argv)
 	// mut edit (opens current folders .mut file, creates if not)
 	// mut
 
-	auto result = run_command("sample.exe");
-	std::println("Took: {} - {}", result.process_time, result.exit_code ? *result.exit_code : -1);
+	// 	if (argv[1] == nullptr)
+	// 	{
+	// 		std::println(std::cerr, "mut needs program to run: mut <program>");
+	// 		return -1;
+	// 	}
 
-	result = run_command("sample2.exe");
-	std::println("Took: {} - {}", result.process_time, result.exit_code ? *result.exit_code : -1);
-
-	result = run_command("sample3.exe");
-	std::println("Took: {} - {}", result.process_time, result.exit_code ? *result.exit_code : -1);
+	auto result = run_command(argv[1]);
+	std::println("Took: {} - {}", result.process_time, result.exit_code ? *result.exit_code : 666);
 
 	for (int count = 0; count < argc; count++)
 		std::println("  argv[{}]   {}", count, argv[count]);

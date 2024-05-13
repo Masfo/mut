@@ -1,0 +1,3 @@
+[submodule "Deckard"]
+	path = Deckard
+	url = https://github.com/Masfo/Deckard.git

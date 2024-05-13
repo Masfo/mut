@@ -17,50 +17,92 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS        OFF)
 set(CMAKE_CXX_SCAN_FOR_MODULES  ON)
 
-# VCPKG
-if(DEFINED ENV{VCPKG_ROOT})
-    set(VCPKG_TARGET_TRIPLET x64-windows-static)
-    set(VCPKG_HOST_TRIPLET x64-windows-static)
-    include($ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
-else()
-    message(WARNING "VCPKG_ROOT is not set")
-endif()
+#set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/bin)
 
-# 3rd party
-include(FetchContent)
-
-FetchContent_Declare(
-  deckard
-  GIT_REPOSITORY https://github.com/Masfo/Deckard.git
-  GIT_TAG main
-  GIT_SHALLOW 1
-  GIT_PROGRESS   TRUE
-)
-FetchContent_MakeAvailable(deckard)
-
-
-
-
-
-
-# Tests
-set(RUN_TESTS                   OFF)
-
-include(SetupMSVC)
-#include(std_modules)
 
 
 project(mut LANGUAGES CXX)
+add_executable(mut)
 
 
-#
-add_executable(${CMAKE_PROJECT_NAME})
+set_property(TARGET mut PROPERTY CXX_STANDARD          23)
+set_property(TARGET mut PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET mut PROPERTY CXX_EXTENSIONS        OFF)
+
+set_target_properties(mut PROPERTIES 
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/bin
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/bin
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_SOURCE_DIR}/bin
+    PDB_NAME mut
+    PDB_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/pdb"
+)
+
+target_compile_options(mut PRIVATE /nologo)
+target_compile_options(mut PRIVATE -Zc:__cplusplus /Zc:alignedNew)
+target_compile_options(mut PRIVATE /utf-8)
+target_compile_options(mut PRIVATE /EHsc)
+#target_compile_options(mut PRIVATE /Za)
+
+target_compile_options(mut  PRIVATE /fp:precise)
+target_compile_options(mut PRIVATE /diagnostics:caret)
 
 
-setup_project(${CMAKE_PROJECT_NAME} "")
+#target_compile_options(mut PRIVATE /experimental:module)
+target_compile_options(mut PRIVATE /Zc:preprocessor)
+target_compile_options(mut PRIVATE /permissive-)
+target_compile_options(mut PRIVATE /std:c++latest /await)
+target_compile_options(mut PRIVATE /Zc:__cplusplus)
 
-set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
-set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+target_compile_options(mut PRIVATE /W4)
+
+      # Debug
+    if (${CMAKE_BUILD_TYPE} MATCHES "Debug")
+
+        target_compile_options(mut  PRIVATE /JMC)    # Just my debugging
+        target_compile_definitions(mut PRIVATE -DDEBUG)
+
+        target_compile_options(mut  PRIVATE /Od)
+
+        target_compile_options(mut  PRIVATE /RTC1)
+        target_compile_options(mut  PRIVATE /GS)
+        target_compile_options(mut  PRIVATE /Zi)     # /ZI edit/continue
+
+        target_link_options(mut PRIVATE /DEBUG)
+        #target_link_options(mut PRIVATE /ALIGN:16)
+    endif()
+
+    # Release
+    if (${CMAKE_BUILD_TYPE} MATCHES "Release")
+       #set_target_properties(mut PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
+
+        target_compile_definitions(mut PRIVATE -DNDEBUG)
+
+        target_compile_options(mut  PRIVATE /O2  /Os)
+        target_compile_options(mut  PRIVATE /GS-)
+
+        target_link_options(mut PRIVATE /Release)
+        target_link_options(mut PRIVATE /INCREMENTAL:NO)
+
+
+        target_link_options(mut PRIVATE /OPT:REF /OPT:ICF)
+    endif()
+
+set_target_properties(mut PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
+set_target_properties(mut PROPERTIES DEBUG_POSTFIX "d")
+set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>")
+
+
+find_program(BUILDINC_TOOL "buildinc")
+if(BUILDINC_TOOL)
+    add_custom_command(TARGET mut
+                        PRE_BUILD
+                        COMMAND ${BUILDINC_TOOL} ${CMAKE_CURRENT_SOURCE_DIR}/src/buildnumber.ixx ${target} -q -m 
+                        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
+                        COMMENT "Increase build number"
+    )
+endif()
+
 
 
 

@@ -1,4 +1,4 @@
-
+#if 0
 #include <windows.h>
 #include <shellapi.h>
 
@@ -228,3 +228,6 @@ int main(int argc, char **argv)
 
 	return 0;
 }
+#else
+int main() { }
+#endif

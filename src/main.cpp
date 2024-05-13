@@ -1,4 +1,3 @@
-#if 0
 #include <windows.h>
 #include <shellapi.h>
 
@@ -155,8 +154,8 @@ int main(int argc, char **argv)
 	using namespace std::string_literals;
 
 #ifndef _DEBUG
-	std::print("mut {} ({}), ", mut::version_string, mut::calver);
-	std::println("deckard {} ({})", DeckardBuild::version_string, DeckardBuild::calver);
+	std::print("mut {} ({}), ", mut::build::version_string, mut::build::calver);
+	std::println("deckard {} ({})", deckard_build::build::version_string, deckard_build::build::calver);
 #endif
 
 	// mut edit (opens current folders .mut file, creates if not)
@@ -228,6 +227,3 @@ int main(int argc, char **argv)
 
 	return 0;
 }
-#else
-int main() { }
-#endif

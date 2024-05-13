@@ -21,6 +21,8 @@ set(CMAKE_CXX_SCAN_FOR_MODULES  ON)
 
 
 
+
+
 project(mut LANGUAGES CXX)
 add_executable(mut)
 
@@ -37,6 +39,16 @@ set_target_properties(mut PROPERTIES
     PDB_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/pdb"
 )
 
+
+target_compile_definitions(mut PRIVATE UNICODE)
+target_compile_definitions(mut PRIVATE _UNICODE)
+
+target_compile_definitions(mut PRIVATE NOMINMAX)
+target_compile_definitions(mut PRIVATE WIN32_LEAN_AND_MEAN)
+target_compile_definitions(mut PRIVATE WIN32_EXTRA_LEAN)
+
+
+
 target_compile_options(mut PRIVATE /nologo)
 target_compile_options(mut PRIVATE -Zc:__cplusplus /Zc:alignedNew)
 target_compile_options(mut PRIVATE /utf-8)
@@ -50,7 +62,7 @@ target_compile_options(mut PRIVATE /diagnostics:caret)
 #target_compile_options(mut PRIVATE /experimental:module)
 target_compile_options(mut PRIVATE /Zc:preprocessor)
 target_compile_options(mut PRIVATE /permissive-)
-target_compile_options(mut PRIVATE /std:c++latest /await)
+target_compile_options(mut PRIVATE /std:c++latest)
 target_compile_options(mut PRIVATE /Zc:__cplusplus)
 
 target_compile_options(mut PRIVATE /W4)
@@ -93,13 +105,41 @@ set_target_properties(mut PROPERTIES DEBUG_POSTFIX "d")
 set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>")
 
 
+
+
+include(FetchContent)
+FetchContent_Declare(
+  Deckard
+  GIT_REPOSITORY https://github.com/Masfo/Deckard.git
+  GIT_TAG main
+)
+FetchContent_MakeAvailable(Deckard)
+
+add_subdirectory(src)
+
+
+set(MODULE_SOURCES
+         $<$<CONFIG:Release>:buildnumber.ixx>
+
+
+)
+
+target_sources(mut
+	PUBLIC
+    FILE_SET CXX_MODULES 
+	FILES ${MODULE_SOURCES}
+)
+
+
+
+
+
 find_program(BUILDINC_TOOL "buildinc")
 if(BUILDINC_TOOL)
     add_custom_command(TARGET mut
-                        PRE_BUILD
-                        COMMAND ${BUILDINC_TOOL} ${CMAKE_CURRENT_SOURCE_DIR}/src/buildnumber.ixx ${target} -q -m 
-                        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
-                        COMMENT "Increase build number"
+                       PRE_BUILD
+                       COMMAND ${BUILDINC_TOOL} ${CMAKE_CURRENT_SOURCE_DIR}/buildnumber.ixx mut -q -m
+                       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src
     )
 endif()
 
@@ -107,7 +147,6 @@ endif()
 
 
 #
-add_subdirectory(src)
 # enable_testing()
 
 

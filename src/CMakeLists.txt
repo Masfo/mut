@@ -1,12 +1,23 @@
 
+include(FetchContent)
+FetchContent_Declare(
+  Deckard
+  GIT_REPOSITORY https://github.com/Masfo/Deckard.git
+  GIT_TAG main
+)
+FetchContent_MakeAvailable(Deckard)
+
+
+
+
 #
-target_sources(${CMAKE_PROJECT_NAME} PRIVATE
+target_sources(mut PRIVATE
 	main.cpp
 )
 
+target_link_libraries(mut PUBLIC deckard)
 
 
-#target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC Deckard)
 
 
 

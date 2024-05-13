@@ -20,7 +20,7 @@ target_sources(${CMAKE_PROJECT_NAME}
 
 
 
-target_link_libraries(${CMAKE_PROJECT_NAME} Deckard)
+target_link_libraries(${CMAKE_PROJECT_NAME} deckard)
 
 
 

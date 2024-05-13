@@ -1,5 +1,5 @@
 
-cmake_minimum_required (VERSION 3.28)
+cmake_minimum_required (VERSION 3.29)
 
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
@@ -30,14 +30,13 @@ endif()
 include(FetchContent)
 
 FetchContent_Declare(
-  Deckard
+  deckard
   GIT_REPOSITORY https://github.com/Masfo/Deckard.git
   GIT_TAG main
   GIT_SHALLOW 1
   GIT_PROGRESS   TRUE
-  #GIT_TAG v0.0.262
 )
-FetchContent_MakeAvailable(Deckard)
+FetchContent_MakeAvailable(deckard)
 
 
 

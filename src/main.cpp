@@ -3,7 +3,7 @@
 #include <shellapi.h>
 
 import std;
-import Deckard;
+import deckard;
 #ifndef _DEBUG
 import mut;
 #endif
@@ -24,11 +24,15 @@ struct CommandResult
 {
 	std::chrono::duration<float> process_time;
 	std::optional<i32>           exit_code{};
+	std::string                  stdout_str;
+	std::string                  stderr_str;
 };
 
 CommandResult run_command(const std::string &command, fs::path folder = fs::current_path())
 {
 	CommandResult command_result;
+
+	// Create pipe and read stdout/stderr to string
 
 	PROCESS_INFORMATION pi{};
 	STARTUPINFOA        si = {sizeof(STARTUPINFO)};

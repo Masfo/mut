@@ -4,6 +4,7 @@ FetchContent_Declare(
   Deckard
   GIT_REPOSITORY https://github.com/Masfo/Deckard.git
   GIT_TAG main
+  GIT_PROGRESS TRUE
 )
 FetchContent_MakeAvailable(Deckard)
 

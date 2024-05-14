@@ -160,12 +160,13 @@ int main(int argc, char **argv)
 
 	// mut edit (opens current folders .mut file, creates if not)
 	// mut
+	std::println("this is sqlite345454545: {}", deckard::archive::sql3_version());
 
-	// 	if (argv[1] == nullptr)
-	// 	{
-	// 		std::println(std::cerr, "mut needs program to run: mut <program>");
-	// 		return -1;
-	// 	}
+	if (argv[1] == nullptr)
+	{
+		std::println(std::cerr, "mut needs program to run: mut <program>");
+		return -1;
+	}
 
 	auto result = run_command(argv[1]);
 	std::println("Took: {} - {}", result.process_time, result.exit_code ? *result.exit_code : 666);
@@ -178,7 +179,6 @@ int main(int argc, char **argv)
 	for (const auto &p : params | std::views::join_with(' '))
 		joined_params += p;
 
-	/*
 	std::string lineInput;
 	while (std::getline(std::cin, lineInput))
 	{
@@ -187,7 +187,7 @@ int main(int argc, char **argv)
 
 		std::println("PIPED: {}", lineInput);
 	}
-	*/
+
 	std::println("P: {}", joined_params);
 
 	// mut tests.exe "cls && tests"

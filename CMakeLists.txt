@@ -107,13 +107,7 @@ set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<$<CONFIG:Debug,RelWithDebInfo>:Progra
 
 
 
-include(FetchContent)
-FetchContent_Declare(
-  Deckard
-  GIT_REPOSITORY https://github.com/Masfo/Deckard.git
-  GIT_TAG main
-)
-FetchContent_MakeAvailable(Deckard)
+
 
 add_subdirectory(src)
 

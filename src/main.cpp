@@ -160,8 +160,10 @@ int main(int argc, char **argv)
 
 	// mut edit (opens current folders .mut file, creates if not)
 	// mut
-	std::println("this is sqlite345454545: {}", deckard::archive::sql3_version());
-
+	{
+		archive::file f("sqlite3.db");
+		f.exec("create table if not exists dummy(id integer primary  key, email TEXT not null unique)");
+	}
 	if (argv[1] == nullptr)
 	{
 		std::println(std::cerr, "mut needs program to run: mut <program>");

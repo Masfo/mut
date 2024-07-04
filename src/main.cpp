@@ -160,33 +160,6 @@ int main(int argc, char **argv)
 	std::println("deckard {} ({})", deckard_build::build::version_string, deckard_build::build::calver);
 #endif
 
-	std::vector<u8> uncomp;
-	uncomp.resize(1024);
-	std::ranges::fill(uncomp, 'X');
-
-	dbg::println("ZSTD bound: {} => {}", uncomp.size(), zstd::bound(uncomp));
-
-	std::vector<u8> comp;
-	comp.resize(zstd::bound(uncomp));
-	auto ok = zstd::compress(uncomp, comp);
-	if (!ok)
-	{
-		dbg::println("Failed to compress");
-	}
-	else
-		comp.resize(*ok);
-
-	std::vector<u8> uncomp2;
-	uncomp2.resize(uncomp.size());
-	ok = zstd::uncompress(comp, uncomp2);
-	if (!ok)
-		dbg::println("Failed to uncompress");
-	else
-	{
-		auto kss = *ok;
-		uncomp2.resize(*ok);
-	}
-
 	// mut edit (opens current folders .mut file, creates if not)
 	// mut
 	if (argv[1] == nullptr)

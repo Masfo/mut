@@ -11,8 +11,6 @@ using namespace deckard;
 using namespace std::chrono_literals;
 namespace fs = std::filesystem;
 
-extern "C" void ___chkstk_ms(ptrdiff_t) { } // ZSTD hack
-
 std::string input(std::string_view ask)
 {
 	std::string ret;

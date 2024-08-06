@@ -25,9 +25,6 @@ set_target_properties(mut PROPERTIES
     # COMPILE_WARNING_AS_ERROR ON
 )
 
-set_property(TARGET mut PROPERTY CXX_STANDARD          23)
-set_property(TARGET mut PROPERTY CXX_STANDARD_REQUIRED ON)
-set_property(TARGET mut PROPERTY CXX_EXTENSIONS        OFF)
 
 set_target_properties(mut PROPERTIES 
     RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/bin

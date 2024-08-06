@@ -155,7 +155,8 @@ int main(int argc, char **argv)
 
 #ifndef _DEBUG
 	std::print("mut {} ({}), ", mut::build::version_string, mut::build::calver);
-	std::println("deckard {} ({})", deckard_build::build::version_string, deckard_build::build::calver);
+	std::println(
+		"deckard {} ({}, {})", deckard_build::build::version_string, deckard_build::build::calver, deckard_build::build::build_time_string);
 #endif
 
 	std::vector<u8> uncomp;

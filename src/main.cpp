@@ -151,42 +151,14 @@ bool match(std::string_view pattern, std::string_view str)
 
 int main(int argc, char **argv)
 {
+
 	using namespace std::string_literals;
 
 #ifndef _DEBUG
-	std::print("mut {} ({}), ", mut::build::version_string, mut::build::calver);
+	std::print("mut {} ({}, {}), ", mut::build::version_string, mut::build::calver, mut::build::build_time_string);
 	std::println(
 		"deckard {} ({}, {})", deckard_build::build::version_string, deckard_build::build::calver, deckard_build::build::build_time_string);
 #endif
-
-	std::vector<u8> uncomp;
-	uncomp.resize(1024);
-	std::ranges::fill(uncomp, 'X');
-
-	dbg::println("ZSTD bound: {} => {}", uncomp.size(), zstd::bound(uncomp));
-
-	std::vector<u8> comp;
-	comp.resize(zstd::bound(uncomp));
-	auto ok = zstd::compress(uncomp, comp);
-	if (!ok)
-	{
-		dbg::println("Failed to compress");
-	}
-	else
-		comp.resize(*ok);
-
-	std::vector<u8> uncomp2;
-	uncomp2.resize(uncomp.size());
-	ok = zstd::uncompress(comp, uncomp2);
-	if (!ok)
-		dbg::println("Failed to uncompress");
-	else
-	{
-		auto kss = *ok;
-		uncomp2.resize(*ok);
-	}
-
-	dbg::println("ZSTD {} => {} => {}", uncomp.size(), comp.size(), uncomp2.size());
 
 	// mut edit (opens current folders .mut file, creates if not)
 	// mut
@@ -195,6 +167,7 @@ int main(int argc, char **argv)
 		std::println(std::cerr, "mut needs program to run: mut <program>");
 		return -1;
 	}
+
 
 	auto result = run_command(argv[1]);
 	std::println("Took: {} - {}", result.process_time, result.exit_code ? *result.exit_code : 666);

@@ -1,4 +1,4 @@
-{
+﻿{
     "version": "0.2.1",
     "defaults": {},
     "configurations": [
@@ -20,8 +20,8 @@
             "type": "debug",
             "project": "CMakeLists.txt",
             "currentDir": "${workspaceRoot}\\bin",
-            "name": "mut sample",
-            "args": [ "sample" ]
+            "name": "mut randomlines",
+            "args": [ "randomlines.exe 16" ]
         }
     ]
 }

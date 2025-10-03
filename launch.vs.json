@@ -1,27 +1,32 @@
-﻿{
-    "version": "0.2.1",
-    "defaults": {},
-    "configurations": [
-        {
-            "type": "debug",
-            "project": "CMakeLists.txt",
-            "currentDir": "${workspaceRoot}\\bin",
-            "name": "Debug w/ argument(s)",
-            "args": [ "-f mut.exe -c \"cls && mut\"" ]
-        },
-        {
-            "type": "debug",
-            "project": "CMakeLists.txt",
-            "currentDir": "${workspaceRoot}\\bin",
-            "name": "Debug w/o arguments",
-            "args": []
-        },
-        {
-            "type": "debug",
-            "project": "CMakeLists.txt",
-            "currentDir": "${workspaceRoot}\\bin",
-            "name": "mut randomlines",
-            "args": [ "randomlines.exe 16" ]
-        }
-    ]
+{
+  "version": "0.2.1",
+  "defaults": {},
+  "configurations": [
+    {
+      "type": "debug",
+      "project": "CMakeLists.txt",
+      "currentDir": "${workspaceRoot}\\bin",
+      "name": "Debug w/ argument(s)",
+      "args": [
+        "-f mut.exe -c \"cls && mut\""
+      ]
+    },
+    {
+      "type": "debug",
+      "project": "CMakeLists.txt",
+      "currentDir": "${workspaceRoot}\\bin",
+      "name": "Debug w/o arguments",
+      "args": []
+    },
+    {
+      "type": "debug",
+      "project": "CMakeLists.txt",
+      "currentDir": "${workspaceRoot}\\bin",
+      "name": "mut randomlines",
+      "args": [
+        "randomlines.exe 1"
+      ],
+      "projectTarget": ""
+    }
+  ]
 }

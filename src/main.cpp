@@ -1,4 +1,4 @@
-﻿#include <windows.h>
+#include <windows.h>
 #include <shellapi.h>
 
 import std;
@@ -18,8 +18,6 @@ std::string input(std::string_view ask)
 	std::getline(std::cin, ret);
 	return ret;
 }
-
-
 
 bool match(std::string_view pattern, std::string_view str)
 {
@@ -77,17 +75,11 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	std::string arguments;
-	 for (int i = 1; i < argc; i++)
-	{
-		arguments += argv[i];
-		if (i < argc - 1)
-			arguments += " ";
-	}
-	
+	std::vector<std::string> args(argv, argv + argc);
+	std::string              arguments = args | std::views::drop(1) | std::views::join_with(' ') | std::ranges::to<std::string>();
 
 	auto result = system::execute_process(arguments);
-	std::println("Took: {} - exit result: {}", result.elapsed_time.count(), result.exit_code);
+	std::println("Took: {} - exit result: {}", result.elapsed_time, as<u32>(result.exit_code));
 
 	for (int count = 0; count < argc; count++)
 		std::println("  argv[{}]   {}", count, argv[count]);
@@ -97,16 +89,16 @@ int main(int argc, char **argv)
 	for (const auto &p : params | std::views::join_with(' '))
 		joined_params += p;
 
-	//std::string lineInput;
-	//while (std::getline(std::cin, lineInput))
+	// std::string lineInput;
+	// while (std::getline(std::cin, lineInput))
 	//{
 	//	if (lineInput.empty())
 	//		break;
 	//
 	//	std::println("PIPED: {}", lineInput);
-	//}
+	// }
 	//
-	//std::println("P: {}", joined_params);
+	// std::println("P: {}", joined_params);
 
 	// mut tests.exe "cls && tests"
 
